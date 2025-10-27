@@ -1,0 +1,70 @@
+/* ========================================
+   Symbion EU Restriction - Admin Bar
+   ======================================== */
+
+/* Admin Bar Menu Item */
+#wpadminbar .symbion-eu-test-menu {
+	background: transparent !important;
+}
+
+#wpadminbar .symbion-eu-test-menu:hover {
+	background: rgba(255, 255, 255, 0.1) !important;
+}
+
+#wpadminbar .symbion-eu-test-menu .ab-item {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+#wpadminbar .symbion-eu-test-menu .ab-icon {
+	font-size: 18px;
+}
+
+#wpadminbar .symbion-eu-test-menu .ab-label {
+	font-weight: 600;
+}
+
+/* Dropdown Items */
+#wpadminbar .symbion-eu-test-country {
+	transition: background 0.2s ease;
+}
+
+#wpadminbar .symbion-eu-test-country:hover {
+	background: rgba(0, 0, 0, 0.05) !important;
+}
+
+#wpadminbar .symbion-eu-test-country.active .ab-item {
+	font-weight: 700;
+	color: #00a32a;
+}
+
+/* Testmodus Indicator (Frontend) */
+body.symbion-test-mode::before {
+	content: "🧪 Testmodus aktiv";
+	position: fixed;
+	top: 32px;
+	right: 0;
+	background: #ff6b00;
+	color: white;
+	padding: 8px 15px;
+	font-weight: 600;
+	font-size: 13px;
+	z-index: 99999;
+	border-radius: 0 0 0 4px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 782px) {
+	body.symbion-test-mode::before {
+		top: 46px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	body.symbion-test-mode::before {
+		font-size: 11px;
+		padding: 6px 12px;
+	}
+}
+

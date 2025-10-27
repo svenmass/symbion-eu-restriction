@@ -1,0 +1,36 @@
+/* ========================================
+   Symbion EU Restriction - Frontend
+   ======================================== */
+
+/* Nur-EU Klasse - Versteckt für Non-EU Besucher */
+body.symbion-non-eu-visitor .nur-eu {
+	display: none !important;
+}
+
+/* Optional: Fade-out Animation für bessere UX */
+body.symbion-non-eu-visitor .nur-eu {
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+/* Debugging: Nur im Testmodus sichtbar */
+body.symbion-test-mode .nur-eu {
+	outline: 2px dashed #ff6b00;
+	position: relative;
+}
+
+body.symbion-test-mode .nur-eu::after {
+	content: "nur-eu (versteckt für Non-EU)";
+	position: absolute;
+	top: -25px;
+	left: 0;
+	background: #ff6b00;
+	color: white;
+	padding: 3px 8px;
+	font-size: 11px;
+	font-weight: 600;
+	border-radius: 3px;
+	pointer-events: none;
+	z-index: 9999;
+}
+

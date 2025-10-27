@@ -1,0 +1,330 @@
+/* ========================================
+   Symbion EU Restriction - Admin CSS
+   ======================================== */
+
+/* Branding Colors */
+:root {
+	--symbion-primary: #102a43;
+	--symbion-primary-light: #1a3a5a;
+	--symbion-accent: #1f67b0;
+	--symbion-success: #28a745;
+	--symbion-danger: #d63638;
+	--symbion-text: #1e1e1e;
+	--symbion-text-light: #757575;
+	--symbion-border: #dcdcde;
+	--symbion-bg: #f0f0f1;
+	--symbion-white: #ffffff;
+}
+
+/* Admin Wrap */
+.symbion-eu-admin-wrap {
+	background: var(--symbion-bg);
+	margin: -20px -20px 0 -22px;
+	padding: 0;
+}
+
+/* Header */
+.symbion-eu-header {
+	background: linear-gradient(135deg, var(--symbion-primary) 0%, var(--symbion-primary-light) 100%);
+	color: var(--symbion-white);
+	padding: 40px 40px 30px;
+	margin-bottom: 30px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.symbion-eu-logo {
+	margin-bottom: 20px;
+}
+
+.symbion-eu-logo img {
+	height: 40px;
+	width: auto;
+}
+
+.symbion-eu-header h1 {
+	color: var(--symbion-white);
+	font-size: 32px;
+	font-weight: 600;
+	margin: 0 0 10px;
+	padding: 0;
+}
+
+.symbion-eu-subtitle {
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 16px;
+	margin: 0;
+}
+
+/* Dashboard Stats */
+.symbion-eu-dashboard {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 20px;
+	padding: 0 40px 30px;
+	margin: 0;
+}
+
+.symbion-eu-stat {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	padding: 25px !important;
+}
+
+.symbion-eu-stat .stat-icon {
+	background: var(--symbion-accent);
+	color: var(--symbion-white);
+	width: 60px;
+	height: 60px;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.symbion-eu-stat .stat-icon .dashicons {
+	font-size: 30px;
+	width: 30px;
+	height: 30px;
+}
+
+.symbion-eu-stat .stat-content {
+	flex: 1;
+}
+
+.symbion-eu-stat .stat-number {
+	font-size: 28px;
+	font-weight: 700;
+	color: var(--symbion-text);
+	line-height: 1;
+	margin-bottom: 5px;
+}
+
+.symbion-eu-stat .stat-label {
+	font-size: 14px;
+	color: var(--symbion-text-light);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Card */
+.symbion-eu-card {
+	background: var(--symbion-white);
+	border-radius: 8px;
+	padding: 30px;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	border: 1px solid var(--symbion-border);
+}
+
+.symbion-eu-card h2 {
+	margin: 0 0 20px;
+	padding: 0 0 15px;
+	border-bottom: 2px solid var(--symbion-accent);
+	font-size: 20px;
+	color: var(--symbion-text);
+}
+
+/* Tabs */
+.symbion-eu-tabs {
+	display: flex;
+	gap: 10px;
+	padding: 0 40px;
+	margin-bottom: 20px;
+	flex-wrap: wrap;
+}
+
+.symbion-eu-tab {
+	background: var(--symbion-white);
+	border: 2px solid var(--symbion-border);
+	border-radius: 8px 8px 0 0;
+	padding: 15px 25px;
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--symbion-text);
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	border-bottom: none;
+	margin-bottom: -1px;
+}
+
+.symbion-eu-tab .dashicons {
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+}
+
+.symbion-eu-tab:hover {
+	background: var(--symbion-bg);
+	border-color: var(--symbion-accent);
+}
+
+.symbion-eu-tab.active {
+	background: var(--symbion-white);
+	border-color: var(--symbion-accent);
+	color: var(--symbion-accent);
+	border-bottom: 2px solid var(--symbion-white);
+	position: relative;
+	z-index: 2;
+}
+
+/* Tab Content */
+.symbion-eu-tab-content {
+	display: none;
+	padding: 0 40px;
+}
+
+.symbion-eu-tab-content.active {
+	display: block;
+}
+
+/* Toggle Switch */
+.symbion-eu-toggle {
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 26px;
+}
+
+.symbion-eu-toggle input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.symbion-eu-toggle-slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	transition: 0.3s;
+	border-radius: 26px;
+}
+
+.symbion-eu-toggle-slider:before {
+	position: absolute;
+	content: "";
+	height: 20px;
+	width: 20px;
+	left: 3px;
+	bottom: 3px;
+	background-color: white;
+	transition: 0.3s;
+	border-radius: 50%;
+}
+
+.symbion-eu-toggle input:checked + .symbion-eu-toggle-slider {
+	background-color: var(--symbion-success);
+}
+
+.symbion-eu-toggle input:checked + .symbion-eu-toggle-slider:before {
+	transform: translateX(24px);
+}
+
+/* Form Table */
+.symbion-eu-card .form-table th {
+	padding: 20px 10px 20px 0;
+	width: 220px;
+	font-weight: 600;
+}
+
+.symbion-eu-card .form-table td {
+	padding: 20px 10px;
+}
+
+.symbion-eu-card .form-table select {
+	min-width: 300px;
+}
+
+/* Info Box */
+.symbion-eu-info-box {
+	background: #e7f3ff;
+	border-left: 4px solid var(--symbion-accent);
+	padding: 15px 20px;
+	margin-top: 20px;
+	border-radius: 4px;
+}
+
+.symbion-eu-info-box h4 {
+	margin: 0 0 10px;
+	color: var(--symbion-primary);
+}
+
+.symbion-eu-info-box ul {
+	margin: 10px 0 0;
+	padding-left: 20px;
+}
+
+.symbion-eu-info-box li {
+	margin-bottom: 5px;
+}
+
+/* Buttons */
+.symbion-eu-card .button-primary {
+	background: var(--symbion-accent);
+	border-color: var(--symbion-accent);
+	padding: 12px 30px;
+	height: auto;
+	font-size: 16px;
+	font-weight: 600;
+	border-radius: 6px;
+	transition: all 0.2s ease;
+}
+
+.symbion-eu-card .button-primary:hover {
+	background: var(--symbion-primary);
+	border-color: var(--symbion-primary);
+	transform: translateY(-1px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+	.symbion-eu-admin-wrap {
+		margin: -10px -10px 0 -10px;
+	}
+
+	.symbion-eu-header {
+		padding: 30px 20px 20px;
+	}
+
+	.symbion-eu-dashboard {
+		padding: 0 20px 20px;
+		grid-template-columns: 1fr;
+	}
+
+	.symbion-eu-tabs {
+		padding: 0 20px;
+	}
+
+	.symbion-eu-tab-content {
+		padding: 0 20px;
+	}
+
+	.symbion-eu-card {
+		padding: 20px;
+	}
+
+	.symbion-eu-card .form-table th {
+		width: 100%;
+		display: block;
+		padding-bottom: 5px;
+	}
+
+	.symbion-eu-card .form-table td {
+		display: block;
+		padding-top: 5px;
+	}
+
+	.symbion-eu-card .form-table select {
+		min-width: 100%;
+	}
+}
+

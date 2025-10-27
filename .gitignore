@@ -1,0 +1,37 @@
+# WordPress
+.DS_Store
+.htaccess
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log
+error_log
+debug.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*~
+
+# Node modules (falls später benötigt)
+node_modules/
+package-lock.json
+
+# Composer (falls später benötigt)
+vendor/
+composer.lock
+
+# Build files
+*.map
+*.min.css
+*.min.js
+
+# Documentation (außer README)
+documentation/*
+!documentation/.gitkeep
+
