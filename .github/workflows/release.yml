@@ -1,0 +1,60 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Get version from tag
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+      
+    - name: Create production build
+      run: |
+        # Erstelle Build-Verzeichnis
+        mkdir -p build/symbion-eu-restriction
+        
+        # Kopiere alle notwendigen Dateien
+        cp -r includes build/symbion-eu-restriction/
+        cp -r assets build/symbion-eu-restriction/
+        cp symbion-eu-restriction.php build/symbion-eu-restriction/
+        cp README.md build/symbion-eu-restriction/
+        cp QUICKSTART.md build/symbion-eu-restriction/
+        
+        # Entferne Development-Dateien
+        rm -rf build/symbion-eu-restriction/.git
+        rm -rf build/symbion-eu-restriction/.github
+        rm -rf build/symbion-eu-restriction/assets/brand
+        
+        # Erstelle ZIP
+        cd build
+        zip -r symbion-eu-restriction-${{ steps.get_version.outputs.VERSION }}.zip symbion-eu-restriction
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build/symbion-eu-restriction-${{ steps.get_version.outputs.VERSION }}.zip
+        name: Release ${{ steps.get_version.outputs.VERSION }}
+        body: |
+          ## Symbion EU Restriction v${{ steps.get_version.outputs.VERSION }}
+          
+          ### Installation
+          1. ZIP-Datei herunterladen
+          2. In WordPress unter Plugins → Installieren → Plugin hochladen
+          3. Plugin aktivieren
+          
+          ### Changelog
+          Siehe [README.md](https://github.com/${{ github.repository }}/blob/main/README.md)
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

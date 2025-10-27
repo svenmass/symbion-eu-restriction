@@ -1,37 +1,14 @@
-# WordPress
-.DS_Store
-.htaccess
+# Build-Verzeichnis
+build/
+*.zip
 
-# IDEs
-.vscode/
+# macOS
+.DS_Store
+
+# IDE
 .idea/
-*.sublime-*
+.vscode/
 
 # Logs
 *.log
-error_log
 debug.log
-
-# Temporary files
-*.tmp
-*.temp
-*.bak
-*~
-
-# Node modules (falls später benötigt)
-node_modules/
-package-lock.json
-
-# Composer (falls später benötigt)
-vendor/
-composer.lock
-
-# Build files
-*.map
-*.min.css
-*.min.js
-
-# Documentation (außer README)
-documentation/*
-!documentation/.gitkeep
-

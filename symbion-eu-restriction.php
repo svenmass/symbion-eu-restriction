@@ -150,6 +150,7 @@ final class Symbion_EU_Restriction {
 		if ( is_admin() ) {
 			$this->components['admin']      = Symbion_EU_Admin::instance();
 			$this->components['bulk_edit']  = Symbion_EU_Bulk_Edit::instance();
+			$this->components['updater']    = Symbion_EU_Updater::instance();
 		}
 
 		// Admin Bar (Frontend & Backend)
