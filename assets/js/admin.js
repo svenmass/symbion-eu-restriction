@@ -55,5 +55,28 @@ jQuery(document).ready(function($) {
 			scrollTop: $('.symbion-eu-tabs').offset().top - 32
 		}, 300);
 	});
+
+	// Category Card Toggle
+	$('.symbion-eu-category-card').on('click', function(e) {
+		e.preventDefault();
+		
+		var $card = $(this);
+		var $checkbox = $card.find('.symbion-eu-category-checkbox');
+		
+		// Toggle Checkbox
+		$checkbox.prop('checked', !$checkbox.prop('checked'));
+		
+		// Toggle Active Class
+		if ($checkbox.prop('checked')) {
+			$card.addClass('active');
+		} else {
+			$card.removeClass('active');
+		}
+	});
+	
+	// Verhindere Checkbox-Click-Propagation (würde sonst doppelt togglen)
+	$('.symbion-eu-category-checkbox').on('click', function(e) {
+		e.stopPropagation();
+	});
 });
 
