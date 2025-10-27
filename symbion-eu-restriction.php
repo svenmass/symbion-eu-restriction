@@ -143,7 +143,7 @@ final class Symbion_EU_Restriction {
 		$this->components['geoip']           = Symbion_EU_GeoIP::instance();
 		$this->components['product_meta']    = Symbion_EU_Product_Meta::instance();
 		$this->components['product_filter']  = Symbion_EU_Product_Filter::instance();
-		$this->components['category_filter'] = Symbion_EU_Category_Filter::instance();
+		// TEMP DEAKTIVIERT: $this->components['category_filter'] = Symbion_EU_Category_Filter::instance();
 		$this->components['content_filter']  = Symbion_EU_Content_Filter::instance();
 
 		// Admin-Komponenten

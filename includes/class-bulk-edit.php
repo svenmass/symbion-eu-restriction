@@ -45,11 +45,6 @@ class Symbion_EU_Bulk_Edit {
 		add_action( 'woocommerce_product_bulk_edit_end', array( $this, 'render_bulk_edit' ) );
 		add_action( 'woocommerce_product_bulk_edit_save', array( $this, 'save_bulk_edit' ) );
 
-		// Bulk Actions (Dropdown)
-		add_filter( 'bulk_actions-edit-product', array( $this, 'add_bulk_actions' ) );
-		add_filter( 'handle_bulk_actions-edit-product', array( $this, 'handle_bulk_actions' ), 10, 3 );
-		add_action( 'admin_notices', array( $this, 'bulk_action_notices' ) );
-
 		// Admin-Spalte
 		add_filter( 'manage_product_posts_columns', array( $this, 'add_column' ) );
 		add_action( 'manage_product_posts_custom_column', array( $this, 'render_column' ), 10, 2 );
@@ -131,110 +126,6 @@ class Symbion_EU_Bulk_Edit {
 	 */
 	public function save_bulk_edit( $product ) {
 		$this->save_quick_edit( $product );
-	}
-
-	/**
-	 * Bulk Actions zum Dropdown hinzufügen
-	 *
-	 * @param array $actions Bulk Actions
-	 * @return array
-	 */
-	public function add_bulk_actions( $actions ) {
-		$actions['symbion_mark_as_set']     = __( 'Als Set markieren (Non-EU Restriktion)', 'symbion-eu-restriction' );
-		$actions['symbion_unmark_as_set']   = __( 'Set-Markierung entfernen', 'symbion-eu-restriction' );
-		return $actions;
-	}
-
-	/**
-	 * Bulk Actions verarbeiten
-	 *
-	 * @param string $redirect_to Redirect-URL
-	 * @param string $action      Action-Name
-	 * @param array  $post_ids    Post-IDs
-	 * @return string
-	 */
-	public function handle_bulk_actions( $redirect_to, $action, $post_ids ) {
-		if ( 'symbion_mark_as_set' !== $action && 'symbion_unmark_as_set' !== $action ) {
-			return $redirect_to;
-		}
-
-		$is_set = ( 'symbion_mark_as_set' === $action );
-		$count  = 0;
-
-		foreach ( $post_ids as $post_id ) {
-			$product = wc_get_product( $post_id );
-			if ( ! $product ) {
-				continue;
-			}
-
-			// Meta-Wert setzen
-			if ( $is_set ) {
-				$product->update_meta_data( Symbion_EU_Core::META_KEY_SET, '1' );
-			} else {
-				$product->delete_meta_data( Symbion_EU_Core::META_KEY_SET );
-			}
-			$product->save();
-			$count++;
-		}
-
-		// Cache invalidieren
-		symbion_eu_restriction()->get_component( 'core' )->invalidate_cache();
-
-		// Redirect mit Erfolgs-Nachricht
-		$redirect_to = add_query_arg(
-			array(
-				'symbion_bulk_action' => $action,
-				'changed'             => $count,
-			),
-			$redirect_to
-		);
-
-		return $redirect_to;
-	}
-
-	/**
-	 * Bulk Action Notices anzeigen
-	 */
-	public function bulk_action_notices() {
-		if ( ! isset( $_GET['symbion_bulk_action'] ) || ! isset( $_GET['changed'] ) ) {
-			return;
-		}
-
-		$action = sanitize_text_field( wp_unslash( $_GET['symbion_bulk_action'] ) );
-		$count  = absint( $_GET['changed'] );
-
-		if ( $count === 0 ) {
-			return;
-		}
-
-		$message = '';
-		if ( 'symbion_mark_as_set' === $action ) {
-			$message = sprintf(
-				/* translators: %d: Anzahl der Produkte */
-				_n(
-					'%d Produkt als Set markiert.',
-					'%d Produkte als Sets markiert.',
-					$count,
-					'symbion-eu-restriction'
-				),
-				$count
-			);
-		} elseif ( 'symbion_unmark_as_set' === $action ) {
-			$message = sprintf(
-				/* translators: %d: Anzahl der Produkte */
-				_n(
-					'Set-Markierung von %d Produkt entfernt.',
-					'Set-Markierung von %d Produkten entfernt.',
-					$count,
-					'symbion-eu-restriction'
-				),
-				$count
-			);
-		}
-
-		if ( $message ) {
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html( $message ) . '</p></div>';
-		}
 	}
 
 	/**
