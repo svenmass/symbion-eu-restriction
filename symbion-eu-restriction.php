@@ -3,7 +3,7 @@
  * Plugin Name: Symbion EU Restriction
  * Plugin URI: https://symbion.dev
  * Description: Intelligente EU-Restriktion für WooCommerce Set-Produkte mit Testmodus und Content-Filterung
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: symbion.dev
  * Author URI: https://symbion.dev
  * Text Domain: symbion-eu-restriction
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin-Konstanten definieren
-define( 'SYMBION_EU_VERSION', '1.0.0' );
+define( 'SYMBION_EU_VERSION', '1.0.1' );
 define( 'SYMBION_EU_FILE', __FILE__ );
 define( 'SYMBION_EU_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SYMBION_EU_URL', plugin_dir_url( __FILE__ ) );
