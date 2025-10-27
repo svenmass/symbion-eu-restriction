@@ -87,6 +87,11 @@ class Symbion_EU_Category_Filter_Simple {
 	 * @return array
 	 */
 	public function filter_terms_args( $args, $taxonomies ) {
+		// Nicht im Admin filtern (außer Frontend)
+		if ( is_admin() ) {
+			return $args;
+		}
+
 		// Nur für product_cat
 		if ( ! in_array( 'product_cat', $taxonomies, true ) ) {
 			return $args;
@@ -128,6 +133,11 @@ class Symbion_EU_Category_Filter_Simple {
 	 * @return array
 	 */
 	public function filter_terms( $terms, $taxonomies, $args ) {
+		// Nicht im Admin filtern (außer Frontend)
+		if ( is_admin() ) {
+			return $terms;
+		}
+
 		// Nur für product_cat
 		if ( ! in_array( 'product_cat', $taxonomies, true ) ) {
 			return $terms;
