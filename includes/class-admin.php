@@ -81,6 +81,7 @@ class Symbion_EU_Admin {
 		register_setting( 'symbion_eu_settings', 'symbion_eu_redirect_custom_page' );
 		register_setting( 'symbion_eu_settings', 'symbion_eu_filter_categories' );
 		register_setting( 'symbion_eu_settings', 'symbion_eu_hide_empty_categories' );
+		register_setting( 'symbion_eu_settings', 'symbion_eu_hidden_categories' );
 	}
 
 	/**
@@ -340,29 +341,44 @@ class Symbion_EU_Admin {
 										<span class="symbion-eu-toggle-slider"></span>
 									</label>
 									<p class="description">
-										<?php esc_html_e( 'Versteckt Kategorien, die ausschließlich Set-Produkte enthalten', 'symbion-eu-restriction' ); ?>
+										<?php esc_html_e( 'Versteckt ausgewählte Kategorien für Non-EU Besucher', 'symbion-eu-restriction' ); ?>
 									</p>
 								</td>
 							</tr>
-						</table>
 
-						<?php
-						// Zeige Set-Only Kategorien
-						$set_only_cats = $core ? $core->get_set_only_category_ids() : array();
-						if ( ! empty( $set_only_cats ) ) {
-							echo '<div class="symbion-eu-info-box">';
-							echo '<h4>' . esc_html__( 'Folgende Kategorien enthalten nur Sets:', 'symbion-eu-restriction' ) . '</h4>';
-							echo '<ul>';
-							foreach ( $set_only_cats as $cat_id ) {
-								$term = get_term( $cat_id, 'product_cat' );
-								if ( $term && ! is_wp_error( $term ) ) {
-									echo '<li><strong>' . esc_html( $term->name ) . '</strong> (' . esc_html( $term->count ) . ' ' . esc_html__( 'Produkte', 'symbion-eu-restriction' ) . ')</li>';
-								}
-							}
-							echo '</ul>';
-							echo '</div>';
-						}
-						?>
+							<tr>
+								<th scope="row">
+									<label for="symbion_eu_hidden_categories"><?php esc_html_e( 'Auszublendende Kategorien', 'symbion-eu-restriction' ); ?></label>
+								</th>
+								<td>
+									<?php
+									$hidden_categories = get_option( 'symbion_eu_hidden_categories', array() );
+									if ( ! is_array( $hidden_categories ) ) {
+										$hidden_categories = array();
+									}
+									
+									$product_categories = get_terms( array(
+										'taxonomy'   => 'product_cat',
+										'hide_empty' => false,
+										'orderby'    => 'name',
+										'order'      => 'ASC',
+									) );
+									
+									if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) {
+										echo '<select name="symbion_eu_hidden_categories[]" id="symbion_eu_hidden_categories" multiple size="10" style="min-width: 400px; height: 200px;">';
+										foreach ( $product_categories as $category ) {
+											$selected = in_array( $category->term_id, $hidden_categories, true ) ? ' selected' : '';
+											echo '<option value="' . esc_attr( $category->term_id ) . '"' . $selected . '>' . esc_html( $category->name ) . ' (' . $category->count . ')</option>';
+										}
+										echo '</select>';
+										echo '<p class="description">' . esc_html__( 'Halte Strg/Cmd gedrückt, um mehrere Kategorien auszuwählen. Diese Kategorien werden für Non-EU Besucher komplett ausgeblendet.', 'symbion-eu-restriction' ) . '</p>';
+									} else {
+										echo '<p>' . esc_html__( 'Keine Produkt-Kategorien gefunden.', 'symbion-eu-restriction' ) . '</p>';
+									}
+									?>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 
@@ -453,6 +469,10 @@ class Symbion_EU_Admin {
 
 			update_option( $option, $value );
 		}
+
+		// Kategorien-Array separat speichern
+		$hidden_categories = isset( $_POST['symbion_eu_hidden_categories'] ) ? array_map( 'absint', $_POST['symbion_eu_hidden_categories'] ) : array();
+		update_option( 'symbion_eu_hidden_categories', $hidden_categories );
 
 		// Cache invalidieren
 		$core = symbion_eu_restriction()->get_component( 'core' );
