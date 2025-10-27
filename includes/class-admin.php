@@ -348,7 +348,7 @@ class Symbion_EU_Admin {
 
 							<tr>
 								<th scope="row">
-									<label for="symbion_eu_hidden_categories"><?php esc_html_e( 'Auszublendende Kategorien', 'symbion-eu-restriction' ); ?></label>
+									<label><?php esc_html_e( 'Auszublendende Kategorien', 'symbion-eu-restriction' ); ?></label>
 								</th>
 								<td>
 									<?php
@@ -365,13 +365,32 @@ class Symbion_EU_Admin {
 									) );
 									
 									if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) {
-										echo '<select name="symbion_eu_hidden_categories[]" id="symbion_eu_hidden_categories" multiple size="10" style="min-width: 400px; height: 200px;">';
+										echo '<div class="symbion-eu-category-grid">';
 										foreach ( $product_categories as $category ) {
-											$selected = in_array( $category->term_id, $hidden_categories, true ) ? ' selected' : '';
-											echo '<option value="' . esc_attr( $category->term_id ) . '"' . $selected . '>' . esc_html( $category->name ) . ' (' . $category->count . ')</option>';
+											$is_checked = in_array( $category->term_id, $hidden_categories, true );
+											$count_text = sprintf( _n( '%d Produkt', '%d Produkte', $category->count, 'symbion-eu-restriction' ), $category->count );
+											?>
+											<label class="symbion-eu-category-card <?php echo $is_checked ? 'active' : ''; ?>">
+												<input type="checkbox" 
+													   name="symbion_eu_hidden_categories[]" 
+													   value="<?php echo esc_attr( $category->term_id ); ?>"
+													   <?php checked( $is_checked ); ?>
+													   class="symbion-eu-category-checkbox">
+												<div class="category-icon">
+													<span class="dashicons dashicons-category"></span>
+												</div>
+												<div class="category-info">
+													<strong class="category-name"><?php echo esc_html( $category->name ); ?></strong>
+													<span class="category-count"><?php echo esc_html( $count_text ); ?></span>
+												</div>
+												<div class="category-badge">
+													<span class="dashicons dashicons-yes"></span>
+												</div>
+											</label>
+											<?php
 										}
-										echo '</select>';
-										echo '<p class="description">' . esc_html__( 'Halte Strg/Cmd gedrückt, um mehrere Kategorien auszuwählen. Diese Kategorien werden für Non-EU Besucher komplett ausgeblendet.', 'symbion-eu-restriction' ) . '</p>';
+										echo '</div>';
+										echo '<p class="description" style="margin-top: 15px;">' . esc_html__( 'Wähle die Kategorien aus, die für Non-EU Besucher komplett ausgeblendet werden sollen.', 'symbion-eu-restriction' ) . '</p>';
 									} else {
 										echo '<p>' . esc_html__( 'Keine Produkt-Kategorien gefunden.', 'symbion-eu-restriction' ) . '</p>';
 									}
