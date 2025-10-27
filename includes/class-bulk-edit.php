@@ -249,15 +249,21 @@ class Symbion_EU_Bulk_Edit {
 	 * @return array
 	 */
 	public function add_column( $columns ) {
+		// Position: Nach der Preis-Spalte einfügen
 		$new_columns = array();
 		
 		foreach ( $columns as $key => $value ) {
 			$new_columns[ $key ] = $value;
 			
-			// Nach Name-Spalte einfügen
-			if ( 'name' === $key ) {
+			// Nach Preis-Spalte einfügen
+			if ( 'price' === $key ) {
 				$new_columns['symbion_eu_set'] = __( 'EU Restriktion', 'symbion-eu-restriction' );
 			}
+		}
+		
+		// Falls keine Preis-Spalte existiert, am Ende hinzufügen
+		if ( ! isset( $new_columns['symbion_eu_set'] ) ) {
+			$new_columns['symbion_eu_set'] = __( 'EU Restriktion', 'symbion-eu-restriction' );
 		}
 		
 		return $new_columns;
