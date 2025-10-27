@@ -254,9 +254,9 @@ class Symbion_EU_Bulk_Edit {
 		foreach ( $columns as $key => $value ) {
 			$new_columns[ $key ] = $value;
 			
-			// Nach Thumbnail einfügen
-			if ( 'thumb' === $key ) {
-				$new_columns['symbion_eu_set'] = '<span class="dashicons dashicons-admin-site-alt3" title="' . esc_attr__( 'EU Restriktion', 'symbion-eu-restriction' ) . '"></span>';
+			// Nach Name-Spalte einfügen
+			if ( 'name' === $key ) {
+				$new_columns['symbion_eu_set'] = __( 'EU Restriktion', 'symbion-eu-restriction' );
 			}
 		}
 		
@@ -280,9 +280,9 @@ class Symbion_EU_Bulk_Edit {
 		}
 
 		if ( $core->is_product_set( $post_id ) ) {
-			echo '<span class="dashicons dashicons-yes-alt" style="color: #d63638;" title="' . esc_attr__( 'Ist Set (EU-Restriktion aktiv)', 'symbion-eu-restriction' ) . '"></span>';
+			echo '<span class="symbion-eu-set-badge" style="display: inline-block; padding: 4px 8px; background: #d63638; color: #fff; border-radius: 3px; font-size: 11px; font-weight: 600; text-transform: uppercase;">Set (Non-EU)</span>';
 		} else {
-			echo '<span class="dashicons dashicons-minus" style="color: #dcdcde;" title="' . esc_attr__( 'Kein Set', 'symbion-eu-restriction' ) . '"></span>';
+			echo '<span style="color: #8c8f94;">—</span>';
 		}
 	}
 
